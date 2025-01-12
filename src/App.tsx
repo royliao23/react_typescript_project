@@ -3,6 +3,7 @@ import "./App.css";
 import InputFeild from "./components/InputFeild";
 import TodoList from "./components/ToDoList";
 import { Todo } from "./models";
+import Counter from "./components/Counter";
 
 const App: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
@@ -19,6 +20,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      <Counter />
       <span className="heading">Taskify</span>
       <InputFeild todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
       <TodoList todos={todos} setTodos={setTodos} />
