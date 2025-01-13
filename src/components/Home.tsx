@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import "./styles.css";
 import InputFeild from "./InputFeild";
 import TodoList from "./ToDoList";
@@ -8,17 +8,18 @@ import Counter from "./Counter";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../state/store";
 import { loggedin } from "../state/counter/counterSlice";
+import About from "./About"; // Example About component
 
 const Home: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => state.counter.login_status); // Check if logged in
+  const isLoggedIn = useSelector((state: RootState) => state.counter.login_status);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/login"); // Redirect to login page if not logged in
+      navigate("/login"); // Redirect to login if not logged in
     }
   }, [isLoggedIn, navigate]);
 
@@ -41,18 +42,16 @@ const Home: React.FC = () => {
       <nav>
         <ul className="menu">
           <li>
-            <a href="#">Home</a>
+            <Link to="/home">Home</Link>
           </li>
           <li>
-            <a href="#">About</a>
+            <Link to="/about">About</Link>
           </li>
           <li>
-            <a href="#">Contact</a>
+            <Link to="/contact">Contact</Link>
           </li>
           <li>
-            <a href="#" onClick={handleLogout}>
-              Log Out
-            </a>
+            <a href="#" onClick={handleLogout}>Log Out</a>
           </li>
         </ul>
       </nav>
@@ -60,6 +59,12 @@ const Home: React.FC = () => {
       <span className="heading">Taskify</span>
       <InputFeild todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
       <TodoList todos={todos} setTodos={setTodos} />
+
+      {/* Make sure this Routes renders the correct component */}
+      <Routes>
+        <Route path="/about" element={<About />} />
+        {/* You can add other routes here */}
+      </Routes>
     </div>
   );
 };

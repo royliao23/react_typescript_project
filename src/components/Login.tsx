@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import './styles.css';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../state/store'
@@ -15,6 +16,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate(); 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null); // Reset error before login attempt
@@ -35,6 +37,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             setError(err.response?.data?.message || 'Invalid credentials');
         } finally {
             dispatch(loggedin(true));
+            navigate("/home");
             setIsLoading(false);
         }
     };
