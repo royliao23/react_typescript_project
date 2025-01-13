@@ -32,29 +32,11 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleLogout = () => {
-    dispatch(loggedin(false)); // Update the Redux state
-    navigate("/login"); // Redirect to login page
-  };
+  
 
   return (
     <div className="home">
-      <nav>
-        <ul className="menu">
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
-            <a href="#" onClick={handleLogout}>Log Out</a>
-          </li>
-        </ul>
-      </nav>
+      
       <Counter />
       <span className="heading">Taskify</span>
       <InputFeild todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
