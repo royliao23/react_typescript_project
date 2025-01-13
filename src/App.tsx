@@ -3,15 +3,8 @@ import Home from "./components/Home";
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from './state/store'
-import { loggedin } from './state/counter/counterSlice';
 import axios from 'axios';
 import Login from './components/Login';
-// import MainComp from './components/MainComp/MainComp';
-// import AboutComp from './components/AboutComp/AboutComp';
-// import ContentComp from './components/ContentComp/ContentComp';
-// import ContactJavaComp from './components/ContactJavaComp/ContactJavaComp';
-// import CategoryJobComp from './components/CategoryJobComp/CategoryJobComp';
-
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,44 +26,22 @@ const App: React.FC = () => {
     }
 }, []);
   // Callback function to handle successful login
+
+const loggedin_status = useSelector((state:RootState) => state.counter.login_status);
 const handleLoginSuccess = (user:any) => {
-    setIsLoggedIn(false);
-    setUsername(user);
+  // setIsLoggedIn(false);
+  // setUsername(user);
+
 };
-
-
-
-
 const [selectedContent, setSelectedContent] = useState("home");
 const showme = () => { console.log("from about me")}
-// const renderContent = () => {
-//     console.log(selectedContent)
-//     switch (selectedContent) {
-//         case "about":
-//             return < AboutComp person={username} logme={ showme} content={content} title={title} awb={awb} color={color} />;
-//         case "Category & Job":
-//             return < CategoryJobComp />;
-//         case "clients":
-//             return < ContentComp />;
-//         case "contact":
-//             return < ContactJavaComp />;
-//         case "support":
-//             return <p>This is the Support page content.</p>;
-//         default:
-//             return <p>Welcome to the homepage!</p>;
-//     }
-// };
+
 
 
 return (
   <div className="App">
-      {isLoggedIn ? (
-          // <>
-          // <MainComp username={username} onSelectMenuItem={setSelectedContent} onLogout={handleLogout} />
-          // <div className="content-area">
-          //   {renderContent()}
-          // </div>
-          // </>
+      {loggedin_status ? (
+       
           <Home />
           
       ) : (

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './styles.css';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../state/store'
+import { loggedin } from '../state/counter/counterSlice';
 // Define the prop types
 interface LoginProps {
     onLoginSuccess: (username: string) => void;
@@ -12,7 +14,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
+    const dispatch = useDispatch();
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(null); // Reset error before login attempt
@@ -32,6 +34,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             onLoginSuccess("Royf");
             setError(err.response?.data?.message || 'Invalid credentials');
         } finally {
+            dispatch(loggedin(true));
             setIsLoading(false);
         }
     };
