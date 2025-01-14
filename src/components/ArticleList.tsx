@@ -2,22 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { Article } from '../models';
 
+
 const ArticleList: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Fetch data from Supabase
     const fetchArticles = async () => {
       try {
         const { data, error } = await supabase
           .from('article')
-          .select('id, title, desc, year'); // Ensure it's an object
+          .select(`id, title, desc, year, author (name, age)`);
 
         if (error) throw error;
 
-        // Since data will now have the correct structure, we can directly set it
-        setArticles(data || []); // Safely update state
+        // Safely cast or transform data to the Article type
+        const formattedData: Article[] = (data || []).map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          desc: item.desc,
+          year: item.year,
+          author: item.author
+            ? {
+                name: item.author.name,
+                age: item.author.age,
+              }
+            : undefined,
+        }));
+
+        setArticles(formattedData); // Now safely set the state
       } catch (error: any) {
         console.error('Error fetching articles:', error.message);
       } finally {
@@ -40,9 +53,15 @@ const ArticleList: React.FC = () => {
           {articles.map((article) => (
             <li key={article.id}>
               <h2>{article.title}</h2>
-              <p>{article.desc}</p>
-              {/* Display author name and age */}
-              {/* <p>Author: {article.author.name}, Age: {article.author.age}</p> */}
+              <p>{article.desc || 'No description available.'}</p>
+              <p>Year: {article.year || 'N/A'}</p>
+              {article.author ? (
+                <p>
+                  Author: {article.author.name || 'Unknown'} (Age: {article.author.age || 'N/A'})
+                </p>
+              ) : (
+                <p>Author information not available.</p>
+              )}
             </li>
           ))}
         </ul>
