@@ -46,7 +46,7 @@ const Articles: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="home">
       <h1>Articles</h1>
       {articles.length > 0 ? (
         <ul>

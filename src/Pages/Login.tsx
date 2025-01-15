@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import "../components/styles.css";
+
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../state/store'
 import { loggedin } from '../state/counter/counterSlice';

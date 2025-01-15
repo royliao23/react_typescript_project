@@ -50,7 +50,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #2f74c0;
+    /* background-color: #2f74c0; */
     font-family: "Neucha", cursive;
   }
   
@@ -67,8 +67,8 @@
     border-radius: 5px;
     padding: 20px;
     margin-top: 15px;
-    background:greenyellow;
-    /* background-image: url("https://img.freepik.com/free-photo/crumpled-yellow-paper-background-close-up_60487-2390.jpg?size=626&ext=jpg"); */
+    /* background:greenyellow; */
+    background-image: url("https://img.freepik.com/free-photo/crumpled-yellow-paper-background-close-up_60487-2390.jpg?size=626&ext=jpg");
   }
   .todos__single--text {
     flex: 1;

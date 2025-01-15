@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
-import { Article } from "../models";
 import { Author } from "../models";
 
 
@@ -43,7 +42,7 @@ const Authors: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="home">
       <h1>Author Page</h1>
       {authors.length > 0 ? (
         authors.map((author) => (
