@@ -43,6 +43,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     };
 
     return (
+        <div className='login'>
         <div className="login-container">
             <h2>Login</h2>
             <form onSubmit={handleLogin} className="login_form">
@@ -69,6 +70,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 </button>
                 {error && <p className="error">{error}</p>}
             </form>
+        </div>
         </div>
     );
 };

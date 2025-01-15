@@ -30,11 +30,11 @@ const About = () => {
 
   return (
     <div className="home">
-      <h1>Taskify</h1>
-      <InputFeild todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
-      <TodoList todos={todos} setTodos={setTodos} />
-
-      
+      <div className="content">
+        <h1>Taskify</h1>
+        <InputFeild todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+        <TodoList todos={todos} setTodos={setTodos} />
+      </div>
     </div>
   );
 }
