@@ -249,8 +249,8 @@ h2 {
   text-align: left;
 }
 
-input[type="text"],
-input[type="password"] {
+
+._box {
   width: 100%;
   padding: 10px 12px;
   font-size: 16px;
@@ -259,8 +259,7 @@ input[type="password"] {
   transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
+.login_box:focus {
   border-color: #6a11cb;
   outline: none;
 }

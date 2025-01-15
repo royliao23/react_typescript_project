@@ -55,6 +55,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     aria-label="Username or Email"
+                    className="login_box"
                 />
                 <label htmlFor="password" className="login_label">Password</label>
                 <input
@@ -64,6 +65,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     aria-label="Password"
+                    className="login_box"
                 />
                 <button type="submit" disabled={isLoading} className="login_button">
                     {isLoading ? 'Logging in...' : 'Log In'}
