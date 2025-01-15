@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Home from "./components/Home";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Login from "./components/Login";
+import Home from "./Pages/Home";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import Authors from "./Pages/Author";
+import Articles from "./Pages/Articles";
+import Login from "./Pages/Login";
 import Nav from "./components/Nav";
 
 const App: React.FC = () => {
@@ -38,6 +40,8 @@ const MainApp: React.FC<MainAppProps> = ({ isLoggedIn, onLoginSuccess }) => {
         {isLoggedIn && <Route path="/home" element={<Home />} />}
         {isLoggedIn && <Route path="/about" element={<About />} />}
         {isLoggedIn && <Route path="/contact" element={<Contact />} />}
+        {isLoggedIn && <Route path="/articles" element={<Articles />} />}
+        {isLoggedIn && <Route path="/authors" element={<Authors />} />}
         {/* Fallback route */}
         <Route path="*" element={<Login onLoginSuccess={onLoginSuccess} />} />
       </Routes>

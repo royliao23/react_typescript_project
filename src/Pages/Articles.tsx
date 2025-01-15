@@ -3,7 +3,7 @@ import { supabase } from '../supabaseClient';
 import { Article } from '../models';
 
 
-const ArticleList: React.FC = () => {
+const Articles: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -72,4 +72,5 @@ const ArticleList: React.FC = () => {
   );
 };
 
-export default ArticleList;
+export default Articles;
+

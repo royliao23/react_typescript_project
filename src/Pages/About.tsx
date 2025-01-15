@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
-import "./styles.css";
-import InputFeild from "./InputFeild";
-import TodoList from "./ToDoList";
+import "../components/styles.css";
+import InputFeild from "../components/InputFeild";
+import TodoList from "../components/ToDoList";
 import { Todo } from "../models";
-import Counter from "./Counter";
+import Counter from "../components/Counter";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../state/store";
 import { loggedin } from "../state/counter/counterSlice";
-import About from "./About"; // Example About component
-
-const Home: React.FC = () => {
+const About = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const dispatch = useDispatch();
@@ -49,6 +47,6 @@ const Home: React.FC = () => {
       </Routes>
     </div>
   );
-};
+}
 
-export default Home;
+export default About
