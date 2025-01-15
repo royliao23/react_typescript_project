@@ -1,8 +1,7 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loggedin } from "../state/counter/counterSlice";
-import "./Nav.css"; // Import CSS for styling
+
 
 const Nav = () => {
   const dispatch = useDispatch();

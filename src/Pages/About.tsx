@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import InputFeild from "../components/InputFeild";
 import TodoList from "../components/ToDoList";
 import { Todo } from "../models";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
-import { loggedin } from "../state/counter/counterSlice";
 const About = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
-  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state: RootState) => state.counter.login_status);
   const navigate = useNavigate();
 
