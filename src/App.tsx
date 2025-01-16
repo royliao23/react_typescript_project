@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./styles.css";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
@@ -18,9 +18,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router>
+    <HashRouter>
       <MainApp isLoggedIn={isLoggedIn} onLoginSuccess={handleLoginSuccess} />
-    </Router>
+    </HashRouter>
   );
 };
 
