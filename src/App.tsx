@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
+
+
+import React, { useEffect, useState } from "react";
+import { HashRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import "./styles.css";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
@@ -31,7 +33,13 @@ interface MainAppProps {
 
 const MainApp: React.FC<MainAppProps> = ({ isLoggedIn, onLoginSuccess }) => {
   const { pathname } = useLocation(); // Move useLocation to this component
-
+  const navigate = useNavigate();
+  // Redirect to login page if not logged in
+  useEffect(() => {
+    if (!isLoggedIn && pathname !== "/login") {
+      navigate("/login"); // Navigate to login and update URL
+    }
+  }, [isLoggedIn, pathname, navigate]);
   return (
     <>
       {/* Conditionally render Nav if the current path is not "/login" */}
@@ -43,6 +51,7 @@ const MainApp: React.FC<MainAppProps> = ({ isLoggedIn, onLoginSuccess }) => {
         {isLoggedIn && <Route path="/contact" element={<Contact />} />}
         {isLoggedIn && <Route path="/articles" element={<Articles />} />}
         {isLoggedIn && <Route path="/authors" element={<Authors />} />}
+        {!isLoggedIn && <Route path="/" element={<Authors />} />}
         {/* Fallback route */}
         <Route path="*" element={<Login onLoginSuccess={onLoginSuccess} />} />
       </Routes>
