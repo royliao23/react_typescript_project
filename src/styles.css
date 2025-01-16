@@ -338,4 +338,67 @@ h2 {
   text-align: center;
 }
 
+/* articles */
+
+.articles {
+  padding: 20px;
+}
+
+.articles-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.articles-table th, .articles-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.articles-table th {
+  background-color: #f4f4f4;
+}
+
+.article-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.article-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.article-form button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.article-form button:hover {
+  background-color: #0056b3;
+}
+
+.description-header,
+.description-cell {
+  display: none; /* Hide by default */
+}
+
+/* Show description column only on screens wider than 600px */
+@media screen and (min-width: 600px) {
+  .description-header,
+  .description-cell {
+    display: table-cell;
+  }
+}
+
+
 

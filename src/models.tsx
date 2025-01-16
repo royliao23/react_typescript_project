@@ -14,8 +14,7 @@ export interface Article {
 }
 
 interface AuthorM {
-  name: string;
-  age: number;
+  name?: string | undefined; id?: number; age?: number | undefined; 
 }
 
 export interface Author {
