@@ -8,11 +8,16 @@ const Nav = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const handleMenuClick = (action?: () => void) => {
+    setIsDropdownOpen(false); // Close the dropdown
+    if (action) action(); // Execute additional actions, if any
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         {/* Logo */}
-        <Link to="/home" className="navbar-logo">
+        <Link to="/home" className="navbar-logo" onClick={() => setIsDropdownOpen(false)}>
           <img src="/logo192.png" alt="Logo" />
           FlexiApp
         </Link>
@@ -30,28 +35,40 @@ const Nav = () => {
         {/* Menu */}
         <ul className={`menu ${isDropdownOpen ? "dropdown-active" : ""}`}>
           <li className="menu-item">
-            <Link to="/home" className="menu-link">Home</Link>
+            <Link to="/home" className="menu-link" onClick={() => handleMenuClick()}>
+              Home
+            </Link>
           </li>
           <li className="menu-item">
-            <Link to="/articles" className="menu-link">Articles</Link>
+            <Link to="/articles" className="menu-link" onClick={() => handleMenuClick()}>
+              Articles
+            </Link>
           </li>
           <li className="menu-item">
-            <Link to="/authors" className="menu-link">Authors</Link>
+            <Link to="/authors" className="menu-link" onClick={() => handleMenuClick()}>
+              Authors
+            </Link>
           </li>
           <li className="menu-item">
-            <Link to="/about" className="menu-link">About</Link>
+            <Link to="/about" className="menu-link" onClick={() => handleMenuClick()}>
+              About
+            </Link>
           </li>
           <li className="menu-item">
-            <Link to="/contact" className="menu-link">Contact</Link>
+            <Link to="/contact" className="menu-link" onClick={() => handleMenuClick()}>
+              Contact
+            </Link>
           </li>
           <li className="menu-item">
             <a
               href="#"
               className="menu-link logout-link"
-              onClick={() => {
-                navigate("/login");
-                dispatch(loggedin(false));
-              }}
+              onClick={() =>
+                handleMenuClick(() => {
+                  navigate("/login");
+                  dispatch(loggedin(false));
+                })
+              }
             >
               Log Out
             </a>
