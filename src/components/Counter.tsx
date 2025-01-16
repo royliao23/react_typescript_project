@@ -11,7 +11,7 @@ function Counter() {
       <div>
         <button onClick={()=>dispatch(increment())}>+</button>
         <button onClick={()=>dispatch(decrement())}>-</button>
-        <button onClick={()=>dispatch(incrementByAmount(10))}>+10</button>
+        <button onClick={()=>dispatch(incrementByAmount(17))}>+17</button>
       </div>
     </div>
   )
