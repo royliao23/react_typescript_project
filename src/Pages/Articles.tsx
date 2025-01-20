@@ -11,17 +11,17 @@ const Articles: React.FC = () => {
     title: "",
     desc: "",
     year: new Date().getFullYear(),
-    author: { name: "", age: 0 },
+    author: { id: 0, name: "", age: undefined },
   });
 
   // Fetch articles from the database
   useEffect(() => {
-    const fetchArticles = async () => {
+    const fetchArticles_supa = async () => {
       setLoading(true);
       try {
         const { data, error } = await supabase
           .from("article")
-          .select("id, title, desc, year, author (name, age)");
+          .select("id, title, desc, year, author (id, name, age)");
 
         if (error) throw error;
 
@@ -31,7 +31,7 @@ const Articles: React.FC = () => {
           desc: item.desc,
           year: item.year,
           author: item.author
-            ? { name: item.author.name, age: item.author.age }
+            ? { id: item.author.id, name: item.author.name, age: item.author.age }
             : undefined,
         }));
 
@@ -43,29 +43,140 @@ const Articles: React.FC = () => {
       }
     };
 
+    
+
+    const fetchArticles = async (): Promise<void> => {
+      setLoading(true);
+      try {
+        const API_URL = "https://royliao.pythonanywhere.com/api/article/?search=fl";
+        const TOKEN = "Token 8854d62680edf3c63c27ee8bf6d2c320cb902f51";
+    
+        const response = await fetch(API_URL, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: TOKEN,
+          },
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Failed to fetch articles: ${response.statusText}`);
+        }
+    
+        const data = await response.json();
+    
+        // Transform the API response to match the Article type
+        const formattedData: Article[] = data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          desc: item.desc,
+          year: parseInt(item.year, 10), // Convert year to a number
+          author: item.author_name
+            ? { id: item.author, name: item.author_name, age: undefined }
+            : undefined,
+        }));
+    
+        setArticles(formattedData);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error fetching articles:", error.message);
+        } else {
+          console.error("Unknown error occurred while fetching articles");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchArticles();
+    
   }, []);
 
   // Handle article creation
-  const handleCreate = async () => {
+  const handleCreate_supa = async () => {
     try {
       const { data, error } = await supabase
         .from("article")
-        .insert([{ ...newArticle, author: { name: newArticle.author?.name, age: newArticle.author?.age } }])
+        // .insert([{ ...newArticle, author: newArticle.author }])
+        .insert([{ ...newArticle, author: 1 }])
         .select();
 
       if (error) throw error;
       setArticles((prev) => [...prev, ...data]);
-      setNewArticle({ id: 0, title: "", desc: "", year: new Date().getFullYear(), author: { name: "", age: 0 } });
+      setNewArticle({
+        id: 0,
+        title: "",
+        desc: "",
+        year: new Date().getFullYear(),
+        author: { id: 0, name: "", age: undefined },
+      });
     } catch (error: any) {
       console.error("Error creating article:", error.message);
     }
   };
 
+  const handleCreate = async (): Promise<void> => {
+    try {
+      const API_URL = "https://royliao.pythonanywhere.com/api/article/";
+      const TOKEN = "Token 8854d62680edf3c63c27ee8bf6d2c320cb902f51";
+  
+      const payload = {
+        title: newArticle.title || "",
+        author: 1,
+        desc: newArticle.desc || "",
+        year: (newArticle.year ?? new Date().getFullYear()).toString(),
+      };
+  
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: TOKEN,
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to create article: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+  
+      // Transform the API response to match the Article type
+      const newArticleFromResponse: Article = {
+        id: data.id,
+        title: data.title,
+        desc: data.desc,
+        year: parseInt(data.year, 10), // Convert year to a number
+        author: { id: data.author, name: data.author_name, age: undefined }, // Adapt to match Article type
+      };
+  
+      // Update the articles state
+      setArticles((prev) => [...prev, newArticleFromResponse]);
+  
+      // Reset the newArticle state
+      setNewArticle({
+        id: 0,
+        title: "",
+        desc: "",
+        year: new Date().getFullYear(),
+        author: { id: 0, name: "", age: undefined },
+      });
+  
+      console.log("Article created successfully:", newArticleFromResponse);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error creating article:", error.message);
+      } else {
+        console.error("Unknown error occurred while creating article");
+      }
+    }
+  };
+  
+
   const handleUpdate = async () => {
     try {
       if (!editingArticle) return;
-      console.log(editingArticle);
+
       const { data, error } = await supabase
         .from("article")
         .update({
@@ -75,25 +186,22 @@ const Articles: React.FC = () => {
           author: editingArticle.author,
         })
         .eq("id", editingArticle.id);
-  
+
       if (error) throw error;
-  
-      // Check if data is not null and contains at least one item
-      if (data && Array.isArray(data) ) {
+
+      if (data && Array.isArray(data)) {
         setArticles((prev) =>
           prev.map((article) =>
             article.id === editingArticle.id ? data[0] : article
           )
         );
       }
-  
-      // Reset editingArticle after successful update
+
       setEditingArticle(null);
     } catch (error: any) {
       console.error("Error updating article:", error.message);
     }
   };
-  
 
   // Handle article deletion
   const handleDelete = async (id: number) => {
